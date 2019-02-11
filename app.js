@@ -7,6 +7,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/myappdatabase', { useNewUrlParser: true });
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -15,6 +18,8 @@ var User = require('./schemas/userSchema');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(logger('dev'));
 app.use(express.json());
