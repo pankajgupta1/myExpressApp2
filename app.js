@@ -12,9 +12,11 @@ const swaggerDocument = require('./swagger.json');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 
 var app = express();
 var User = require('./schemas/userSchema');
+var Post = require('./schemas/postSchema');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -28,7 +30,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/posts', postsRouter)
 
 app.use('/data', (req, res, next) => {
   var newUser = new User({

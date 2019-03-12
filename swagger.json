@@ -71,6 +71,62 @@
           }
         }
       },
+      "/users/addUser": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "description": "add new user",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "schema": {
+                "$ref": "#/definitions/AddUser"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses":{
+            "200": {
+              "description": "New user is added",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/users/login": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "description": "for login",
+          "parameters": [
+            {
+              "name":"user",
+              "in":"body",
+              "schema": {
+                "$ref":"#/definitions/UserLogin"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "to log in user",
+              "schema": {
+                "$ref":"#/definitions/User"
+              }
+            }
+          }
+        }
+      },
       "/users/{userId}": {
         "parameters": [
           {
@@ -133,9 +189,98 @@
             }
           }
         }
+      },
+      "/posts/addPost": {
+        "post": {
+          "tags": [
+            "Posts"
+          ],
+          "description": "create new post",
+          "parameters": [
+            {
+              "name": "post",
+              "in": "body",
+              "description": "add post",
+              "schema": {
+                "$ref":"#/definitions/AddPost"
+              }
+            }
+          ],
+          "produces":[
+            "application/json"
+          ],
+          "responses":{
+            "200":{
+              "description":"new post added",
+              "schema": {
+                "$ref":"#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/posts/getPosts": {
+        "get": {
+          "tags": [
+            "Posts"
+          ],
+          "description": " get post list",
+          "parameters": [
+            {
+              "name": "post",
+              "in":"body"
+            }
+          ]
+        }
       }
     },
     "definitions": {
+      "AddPost": {
+        "required": [
+          "title",
+          "userId"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "AddUser": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLogin": {
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
       "User": {
         "required": [
           "email",
@@ -161,6 +306,10 @@
       "Users": {
         "type": "array",
         "$ref": "#/definitions/User"
+      },
+      "Posts": {
+        "type": "array",
+        "$ref":"#/definitions/AddPost"
       }
     }
   }
