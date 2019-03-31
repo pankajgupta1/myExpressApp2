@@ -1,315 +1,351 @@
-
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Yet Another Node.js Blogg Application API",
-      "description": "Yet Another Node.js Blogg Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Yet Another Node.js Blogg Application API",
+    "description": "Yet Another Node.js Blogg Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
       }
     },
-    "host": "localhost:3000",
-    "basePath": "/api/v1",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
+    "/users/addUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "add new user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AddUser"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is added",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
       }
-    ],
-    "schemes": [
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/users": {
-        "post": {
-          "tags": [
-            "Users"
-          ],
-          "description": "Create new user in system",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User that we want to create",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "New user is created",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "for login",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
             }
           }
-        },
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get all users in system",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/Users"
-              }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "to log in user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           }
         }
       },
-      "/users/addUser": {
-        "post": {
-          "tags": [
-            "Users"
-          ],
-          "description": "add new user",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "schema": {
-                "$ref": "#/definitions/AddUser"
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses":{
-            "200": {
-              "description": "New user is added",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           }
         }
       },
-      "/users/login": {
-        "post": {
-          "tags": [
-            "Users"
-          ],
-          "description": "for login",
-          "parameters": [
-            {
-              "name":"user",
-              "in":"body",
-              "schema": {
-                "$ref":"#/definitions/UserLogin"
-              }
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "to log in user",
-              "schema": {
-                "$ref":"#/definitions/User"
-              }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           }
         }
-      },
-      "/users/{userId}": {
+      }
+    },
+    "/posts/addPost": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "create new post",
+        "parameters": [
+          {
+            "name": "post",
+            "in": "body",
+            "description": "add post",
+            "schema": {
+              "$ref": "#/definitions/AddPost"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "new post added",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          }
+        }
+      }
+    },
+    "/posts/getPosts": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "description": "get post list",
         "parameters": [
           {
             "name": "userId",
-            "in": "path",
-            "required": true,
-            "description": "ID of user that we want to find",
+            "in": "query",
+            "description": "id of user whose posts we want to find",
             "type": "string"
           }
         ],
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get user with given ID",
-          "responses": {
-            "200": {
-              "description": "User is found",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        },
-        "delete": {
-          "summary": "Delete user with given ID",
-          "tags": [
-            "Users"
-          ],
-          "responses": {
-            "200": {
-              "description": "User is deleted",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        },
-        "put": {
-          "summary": "Update user with give ID",
-          "tags": [
-            "Users"
-          ],
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User with new values of properties",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User is updated",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "posts listed",
+            "schema": {
+              "$ref": "#/definitions/Posts"
             }
           }
         }
-      },
-      "/posts/addPost": {
-        "post": {
-          "tags": [
-            "Posts"
-          ],
-          "description": "create new post",
-          "parameters": [
-            {
-              "name": "post",
-              "in": "body",
-              "description": "add post",
-              "schema": {
-                "$ref":"#/definitions/AddPost"
-              }
-            }
-          ],
-          "produces":[
-            "application/json"
-          ],
-          "responses":{
-            "200":{
-              "description":"new post added",
-              "schema": {
-                "$ref":"#/definitions/User"
-              }
-            }
-          }
-        }
-      },
-      "/posts/getPosts": {
-        "get": {
-          "tags": [
-            "Posts"
-          ],
-          "description": " get post list",
-          "parameters": [
-            {
-              "name": "post",
-              "in":"body"
-            }
-          ]
+      }
+    }
+  },
+  "definitions": {
+    "AddPost": {
+      "required": [
+        "title",
+        "userId"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
         }
       }
     },
-    "definitions": {
-      "AddPost": {
-        "required": [
-          "title",
-          "userId"
-        ],
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string"
-          }
+    "Post": {
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
         }
-      },
-      "AddUser": {
-        "required": [
-          "email",
-          "password"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "UserLogin": {
-        "required": [
-          "username",
-          "password"
-        ],
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "User": {
-        "required": [
-          "email",
-          "_id"
-        ],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          }
-        }
-      },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
-      },
-      "Posts": {
-        "type": "array",
-        "$ref":"#/definitions/AddPost"
       }
+    },
+    "GetPosts": {
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "AddUser": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UserLogin": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "required": [
+        "email",
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "$ref": "#/definitions/User"
+    },
+    "Posts": {
+      "type": "array",
+      "$ref": "#/definitions/Post"
     }
   }
+}

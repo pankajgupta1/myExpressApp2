@@ -21,7 +21,14 @@ router.post('/addPost', function(req, res, next) {
 })
 
 router.get('/getPosts', function(req, res, next) {
-    Post.find({ userId: req.body.userId }, function(err, posts) {
+    
+        // console.log('Object.keys(req)', Object.keys(req));
+    console.log('req.query', req.query);
+    console.log('req.path', req.path);
+    console.log('req.body', req.body);
+    console.log('req.headers', req.headers);
+    console.log('req.param', req.param('userId'));
+    Post.find({ userId: req.param('userId') }, function(err, posts) {
         if(err) throw err
         res.send(posts)
     })
