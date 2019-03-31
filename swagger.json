@@ -230,6 +230,12 @@
             "in": "query",
             "description": "id of user whose posts we want to find",
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "token of user",
+            "type": "string"
           }
         ],
         "produces": [
