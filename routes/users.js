@@ -34,11 +34,9 @@ router.post('/login', (req, res, next) => {
     if (err) throw err;
     var token = jwt.sign({ userId: user._id }, 'mytokenkey');
     // res.send(user)
-    res.status(200).json({
-      // ...user,
-      token
-    })
-  })
+    user.token = token;
+    res.status(200).json(user)
+  }).lean();
 })
 
 module.exports = router;
